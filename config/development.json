@@ -1,0 +1,6 @@
+{
+  "name": "name of development project",
+  "mail": {
+    "host": "dev-mail-server"
+  }
+}
