@@ -2,10 +2,15 @@ const express = require("express");
 const config = require("config");
 const app = express();
 const Joi = require("@hapi/joi");
-const logger = require("./logger");
 const authenticate = require("./authentication");
 const helmet = require("helmet");
 const morgan = require("morgan");
+
+// template used is pug
+app.set("view engine", "pug");
+// path of views
+app.set("views", "./views");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -18,7 +23,7 @@ if (app.get("env") === "development") {
   app.use(morgan("tiny"));
   console.log("MORGAN ENABLED");
 }
-app.use(logger);
+
 app.use(authenticate);
 
 app.use(helmet());
@@ -33,7 +38,10 @@ const GENERES = [
 ];
 
 app.get("/", (req, res) => {
-  console.log("Hello World");
+  res.render("index", {
+    title: "My dummy project ",
+    message: "this is the message ",
+  });
 });
 
 // get generes
